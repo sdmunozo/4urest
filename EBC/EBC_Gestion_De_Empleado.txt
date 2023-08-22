@@ -1,0 +1,35 @@
+@startuml
+allowmixing
+
+package "Gestión de Empleados" {
+
+  class Empleado <<Entity>> {
+    + id : smallint
+    + nombre : nvarchar(50)
+    + apellidos : nvarchar(50)
+    + claveEncryp : nvarchar(200)
+    + perfilId : smallint
+    + estaInactivo : bit
+  }
+
+  interface FormularioEmpleado <<Boundary>> {
+    + mostrarFormulario()
+    + mostrarMensaje(msg: string)
+    + solicitarConfirmacion() : bool
+  }
+
+  class GestorEmpleado <<Control>> {
+    + agregarEmpleado(datos: Empleado)
+    + modificarEmpleado(datos: Empleado)
+    + eliminarEmpleado(id: smallint)
+  }
+
+}
+
+actor Admin
+
+Admin --> FormularioEmpleado: Interactúa
+FormularioEmpleado --> GestorEmpleado: Envía peticiones
+GestorEmpleado --> Empleado: Realiza operaciones
+
+@enduml

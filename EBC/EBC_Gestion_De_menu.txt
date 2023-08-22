@@ -1,0 +1,145 @@
+@startuml
+allowmixing
+
+package "Gestión de Menú - Categorías" {
+
+  class Categoria <<Entity>> {
+    + id : smallint
+    + nombre : nvarchar(20)
+    + ordenEnPantalla : tinyint
+    + color : int
+    + estaInactivo : bit
+    + parentId : smallint
+  }
+
+  interface FormularioCategoria <<Boundary>> {
+    + mostrarFormulario()
+    + mostrarMensaje(msg: string)
+    + solicitarConfirmacion() : bool
+  }
+
+  class GestorCategoria <<Control>> {
+    + agregarCategoria(datos: Categoria)
+    + modificarCategoria(datos: Categoria)
+    + eliminarCategoria(id: smallint)
+  }
+
+}
+
+actor Admin
+
+Admin --> FormularioCategoria: Interactúa
+FormularioCategoria --> GestorCategoria: Envía peticiones
+GestorCategoria --> Categoria: Realiza operaciones
+
+@enduml
+
+@startuml
+allowmixing
+
+package "Gestión de Menú - Productos" {
+
+  class Producto <<Entity>> {
+    + id : smallint
+    + nombre : nvarchar(50)
+    + precio : decimal
+    + ordenPantalla : tinyint
+    + color : int
+    + minMod : tinyint
+    + maxMod : tinyint
+    + categoriaId : smallint
+    + estaInactivo : bit
+  }
+
+  interface FormularioProducto <<Boundary>> {
+    + mostrarFormulario()
+    + mostrarMensaje(msg: string)
+    + solicitarConfirmacion() : bool
+  }
+
+  class GestorProducto <<Control>> {
+    + agregarProducto(datos: Producto)
+    + modificarProducto(datos: Producto)
+    + eliminarProducto(id: smallint)
+  }
+
+}
+
+actor Admin
+
+Admin --> FormularioProducto: Interactúa
+FormularioProducto --> GestorProducto: Envía peticiones
+GestorProducto --> Producto: Realiza operaciones
+
+@enduml
+
+@startuml
+allowmixing
+
+package "Gestión de Modificadores - Grupos" {
+
+  class GrupoModificador <<Entity>> {
+    + id : smallint
+    + nombre : nvarchar(20)
+    + maximo : tinyint
+    + minimo : tinyint
+    + estaInactivo : bit
+    + parentId : smallint
+  }
+
+  interface FormularioGrupoModificador <<Boundary>> {
+    + mostrarFormulario()
+    + mostrarMensaje(msg: string)
+    + solicitarConfirmacion() : bool
+  }
+
+  class GestorGrupoModificador <<Control>> {
+    + agregarGrupoModificador(datos: GrupoModificador)
+    + modificarGrupoModificador(datos: GrupoModificador)
+    + eliminarGrupoModificador(id: smallint)
+  }
+
+}
+
+actor Admin
+
+Admin --> FormularioGrupoModificador: Interactúa
+FormularioGrupoModificador --> GestorGrupoModificador: Envía peticiones
+GestorGrupoModificador --> GrupoModificador: Realiza operaciones
+
+@enduml
+
+@startuml
+allowmixing
+
+package "Gestión de Modificadores" {
+
+  class Modificador <<Entity>> {
+    + id : smallint
+    + nombre : nvarchar(20)
+    + precio : decimal
+    + grupoModificadorId : smallint
+    + estaInactivo : bit
+  }
+
+  interface FormularioModificador <<Boundary>> {
+    + mostrarFormulario()
+    + mostrarMensaje(msg: string)
+    + solicitarConfirmacion() : bool
+  }
+
+  class GestorModificador <<Control>> {
+    + agregarModificador(datos: Modificador)
+    + modificarModificador(datos: Modificador)
+    + eliminarModificador(id: smallint)
+  }
+
+}
+
+actor Admin
+
+Admin --> FormularioModificador: Interactúa
+FormularioModificador --> GestorModificador: Envía peticiones
+GestorModificador --> Modificador: Realiza operaciones
+
+@enduml
